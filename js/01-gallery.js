@@ -1,9 +1,8 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-console.log(galleryItems);
-
 const container = document.querySelector(".gallery");
+container.addEventListener("click", onClick);
 
 const markup = galleryItems
 	.map(
@@ -20,59 +19,32 @@ const markup = galleryItems
       </li>`
 	)
 	.join("");
-container.insertAdjacentHTML("beforeend", markup);
 
-container.addEventListener("click", onClick);
+container.insertAdjacentHTML("beforeend", markup);
 
 function onClick(e) {
 	e.preventDefault();
 	if (!e.target.classList.contains("gallery__image")) {
 		return;
 	}
-	// console.log(e.target, "click");
-	// console.log(e.target.dataset.source);
-
 	const imageEl = basicLightbox.create(
 		`
     <img src="${e.target.dataset.source}" width="800" height="600">
-  `,
+    `,
 		{
-			onShow: (imageEl) => {
+			onShow: () => {
 				window.addEventListener("keydown", onKeyPressEsc);
-
-				console.log("onShow");
 			},
-			onClose: (imageEl) => {
+			onClose: () => {
 				window.removeEventListener("keydown", onKeyPressEsc);
-				console.log(onKeyPressEsc());
-				console.log("onClose");
 			},
 		}
 	);
-
+	function onKeyPressEsc(e) {
+		if (e.code !== "Escape") {
+			return;
+		}
+		imageEl.close();
+	}
 	imageEl.show();
 }
-
-function onKeyPressEsc(e) {
-	if (e.code !== "Escape") {
-		return;
-	}
-
-	console.log(e.code);
-	// console.log(e.code);
-}
-
-/*
-
-
-document.querySelector('button.image').onclick = () => {
-
-	basicLightbox.create(`
-		<img width="1400" height="900" src="https://placehold.it/1400x900">
-	`).show()
-
-}
-
-
-
-*/
