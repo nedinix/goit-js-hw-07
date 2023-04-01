@@ -2,7 +2,6 @@ import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
 const container = document.querySelector(".gallery");
-container.addEventListener("click", onClick);
 
 const markup = galleryItems
 	.map(
@@ -24,8 +23,7 @@ container.insertAdjacentHTML("beforeend", markup);
 
 var imageEl = new SimpleLightbox(".gallery a", {
 	/* options */
+	captions: true,
+	captionsData: "alt",
+	captionDelay: 250,
 });
-
-function onClick(e) {
-	imageEl.show.simplelightbox;
-}
