@@ -32,19 +32,23 @@ function onClick(e) {
     <img src="${e.target.dataset.source}" width="800" height="600">
     `,
 		{
-			onShow: () => {
-				window.addEventListener("keydown", onKeyPressEsc);
+			handler: null,
+			onShow: (imageEl) => {
+				this.handler = onKeyPressEsc.bind(imageEl);
+				window.addEventListener("keydown", this.handler);
 			},
 			onClose: () => {
-				window.removeEventListener("keydown", onKeyPressEsc);
+				window.removeEventListener("keydown", this.handler);
 			},
 		}
 	);
-	function onKeyPressEsc(e) {
-		if (e.code !== "Escape") {
-			return;
-		}
-		imageEl.close();
-	}
+
 	imageEl.show();
+}
+
+function onKeyPressEsc(e) {
+	if (e.code !== "Escape") {
+		return;
+	}
+	this.close();
 }
